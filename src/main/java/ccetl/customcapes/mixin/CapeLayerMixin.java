@@ -1,11 +1,9 @@
 package ccetl.customcapes.mixin;
 
-import ccetl.customcapes.Cape.Cape;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.logging.LogUtils;
 import com.mojang.math.Vector3f;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -17,11 +15,9 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -30,9 +26,9 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 @Mixin(CapeLayer.class)
@@ -41,6 +37,10 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
     public CapeLayerMixin(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> p_117346_) {
         super(p_117346_);
     }
+
+    private List<Object> namesOfPlayersWithSavedCape = new ArrayList<>();
+    private List<Object> namesOfPlayersWhichDoNotHaveACape = new ArrayList<>();
+    private List<Object> namesOfPlayersWhichDoHaveACape = new ArrayList<>();
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -53,108 +53,118 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
     public void render(PoseStack p_116615_, MultiBufferSource p_116616_, int p_116617_, AbstractClientPlayer p_116618_, float p_116619_, float p_116620_, float p_116621_, float p_116622_, float p_116623_, float p_116624_) {
         if (p_116618_.getName() != null && !p_116618_.getName().equals("")) {
             String name = p_116618_.getName().getString();
-
-            LOGGER.info("Started loading the Cape of " + name);
-
             String runLocation = Paths.get(".").toAbsolutePath().normalize().toString().toLowerCase().replace(" ", "-");
             String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + name.toLowerCase(Locale.ROOT) + ".png";
             String rawPath = runLocation.toLowerCase(Locale.ROOT) + "\\CustomCapes\\cache";
             String locationForMinecraft = "\\customcapes\\cache\\" + name.toLowerCase(Locale.ROOT) + ".png";
-
-            URL url = null;
-            try {
-                url = new URL("https://customcapes.org/api/capes/" + name + ".png");
-            } catch (MalformedURLException e) {
-                LOGGER.warn("failed to set the url");
-                LOGGER.warn(e.getMessage());
-                e.printStackTrace();
-            }
-            String CustomCapes = "CustomCapes";
-
-            //create the path
-            new File(rawPath).mkdirs();
-
-            //safe the image from the api
-            InputStream is = null;
-            try {
-                assert url != null;
-                is = url.openStream();
-            } catch (IOException e) {
-                LOGGER.warn("failed to open the connection to CustomCapes");
-                LOGGER.warn(e.getMessage());
-                e.printStackTrace();
-            }
-            OutputStream os = null;
-            try {
-                os = new FileOutputStream(path);
-            } catch (FileNotFoundException e) {
-                LOGGER.warn("failed to create the outputStream");
-                LOGGER.warn(e.getMessage());
-                e.printStackTrace();
-            }
-            byte[] b = new byte[2048];
-            int length = 0;
-            int check = 0;
-            while (true) {
-                try {
-                    assert is != null;
-                    if ((length = is.read(b)) == -1) break;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                check += 1;
-                try {
-                    assert os != null;
-                    os.write(b, 0, length);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            try {
-                is.close();
-            } catch (IOException e) {
-                LOGGER.warn("failed to end the connection");
-                LOGGER.warn(e.getMessage());
-                e.printStackTrace();
-            }
-            try {
-                assert os != null;
-                os.close();
-            } catch (IOException e) {
-                LOGGER.warn("failed to end the download");
-                LOGGER.warn(e.getMessage());
-                e.printStackTrace();
-            }
-
             URL hasCapeURL = null;
             boolean hasCape = false;
-            try {
-                hasCapeURL = new URL("https://customcapes.org/api/hascape/" + name);
-            } catch (MalformedURLException e) {
-                LOGGER.warn("Unable to set the url to api/hasCape");
-                LOGGER.warn(e.getMessage());
-                e.printStackTrace();
-            }
-            try {
-                URLConnection urlconnection = hasCapeURL.openConnection();
-                BufferedReader br = new BufferedReader(new InputStreamReader(urlconnection.getInputStream()));
-                String hasCapeString;
-                while ((hasCapeString = br.readLine()) != null) {
-                    if(hasCapeString.equals("true")){
-                        hasCape = true;
-                    } else if(hasCapeString.equals("false")) {
-                        hasCape = false;
-                    } else {
-                        LOGGER.warn("Something went wrong while reading " + hasCapeURL);
-                    }
+            LOGGER.info("Started loading the Cape of " + name);
+
+            if(!namesOfPlayersWhichDoNotHaveACape.contains(name) || !namesOfPlayersWhichDoHaveACape.contains(name)) {
+                try {
+                    hasCapeURL = new URL("https://customcapes.org/api/hascape/" + name);
+                } catch (MalformedURLException e) {
+                    LOGGER.warn("Unable to set the url to api/hasCape");
+                    LOGGER.warn(e.getMessage());
+                    e.printStackTrace();
                 }
-                br.close();
-            } catch (IOException e) {
-                LOGGER.warn("Unable to check if " + name + " has a cape" );
-                LOGGER.warn(e.getMessage());
-                e.printStackTrace();
+                try {
+                    URLConnection urlconnection = hasCapeURL.openConnection();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(urlconnection.getInputStream()));
+                    String hasCapeString;
+                    while ((hasCapeString = br.readLine()) != null) {
+                        if (hasCapeString.equals("true")) {
+                            hasCape = true;
+                            namesOfPlayersWhichDoHaveACape.add(name);
+                        } else if (hasCapeString.equals("false")) {
+                            hasCape = false;
+                            namesOfPlayersWhichDoNotHaveACape.add(name);
+                        } else {
+                            LOGGER.warn("Something went wrong while reading " + hasCapeURL);
+                        }
+                    }
+                    br.close();
+                } catch (IOException e) {
+                    LOGGER.warn("Unable to check if " + name + " has a cape");
+                    LOGGER.warn(e.getMessage());
+                    e.printStackTrace();
+                }
+            } else if(namesOfPlayersWhichDoHaveACape.contains(name)) {
+                hasCape = true;
+            } else if(namesOfPlayersWhichDoNotHaveACape.contains(name)) {
+                hasCape = false;
+            } else {
+                hasCape = false;
             }
 
+            if(hasCape && !namesOfPlayersWithSavedCape.contains(name)) {
+                URL url = null;
+                try {
+                    url = new URL("https://customcapes.org/api/capes/" + name + ".png");
+                } catch (MalformedURLException e) {
+                    LOGGER.warn("failed to set the url");
+                    LOGGER.warn(e.getMessage());
+                    e.printStackTrace();
+                }
+                String CustomCapes = "CustomCapes";
+
+                //create the path
+                new File(rawPath).mkdirs();
+
+                //safe the image from the api
+                InputStream is = null;
+                try {
+                    assert url != null;
+                    is = url.openStream();
+                } catch (IOException e) {
+                    LOGGER.warn("failed to open the connection to CustomCapes");
+                    LOGGER.warn(e.getMessage());
+                    e.printStackTrace();
+                }
+                OutputStream os = null;
+                try {
+                    os = new FileOutputStream(path);
+                } catch (FileNotFoundException e) {
+                    LOGGER.warn("failed to create the outputStream");
+                    LOGGER.warn(e.getMessage());
+                    e.printStackTrace();
+                }
+                byte[] b = new byte[2048];
+                int length = 0;
+                int check = 0;
+                while (true) {
+                    try {
+                        assert is != null;
+                        if ((length = is.read(b)) == -1) break;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    check += 1;
+                    try {
+                        assert os != null;
+                        os.write(b, 0, length);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    LOGGER.warn("failed to end the connection");
+                    LOGGER.warn(e.getMessage());
+                    e.printStackTrace();
+                }
+                try {
+                    assert os != null;
+                    os.close();
+                } catch (IOException e) {
+                    LOGGER.warn("failed to end the download");
+                    LOGGER.warn(e.getMessage());
+                    e.printStackTrace();
+                }
+                namesOfPlayersWithSavedCape.add(name);
+            }
 
             if (p_116618_.isCapeLoaded() && !p_116618_.isInvisible() && p_116618_.isModelPartShown(PlayerModelPart.CAPE) && hasCape) {
                 LOGGER.info(name + " has a cape!");
