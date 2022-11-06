@@ -59,6 +59,7 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
             String runLocation = Paths.get(".").toAbsolutePath().normalize().toString().toLowerCase().replace(" ", "-");
             String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + name.toLowerCase(Locale.ROOT) + ".png";
             String rawPath = runLocation.toLowerCase(Locale.ROOT) + "\\CustomCapes\\cache";
+            String locationForMinecraft = "\\customcapes\\cache\\" + name.toLowerCase(Locale.ROOT) + ".png";
 
             URL url = null;
             try {
@@ -157,7 +158,7 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
 
             if (p_116618_.isCapeLoaded() && !p_116618_.isInvisible() && p_116618_.isModelPartShown(PlayerModelPart.CAPE) && hasCape) {
                 LOGGER.info(name + " has a cape!");
-                String capeLocation = path.replace("\\", "/").toLowerCase(Locale.ROOT);
+                String capeLocation = locationForMinecraft.replace("\\", "/").toLowerCase(Locale.ROOT);
                 ResourceLocation cape = new ResourceLocation(capeLocation);
                 ItemStack itemstack = p_116618_.getItemBySlot(EquipmentSlot.CHEST);
                 if (!itemstack.is(Items.ELYTRA)) {
