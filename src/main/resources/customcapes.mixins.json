@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "ccetl.customcapes.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "customcapes.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "CapeLayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
