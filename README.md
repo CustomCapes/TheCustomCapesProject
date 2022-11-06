@@ -18,10 +18,10 @@
     <img src="https://github.com/CustomCapes/CustomCapes-mod-template/" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">CustomCapes</h3>
+<h3 align="center">CustomCapes NOT DONE!</h3>
 
   <p align="center">
-    a simple template to implement the cusomcapes api in Forge and Fabric.
+   implement the cusomcapes api in Forge and Fabric.
     <br />
     <a href="https://customcapes.org/"><strong>Explore the docs »</strong></a>
     <br />
