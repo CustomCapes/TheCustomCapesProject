@@ -1,9 +1,11 @@
 package ccetl.customcapes.mixin;
 
+import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.logging.LogUtils;
 import com.mojang.math.Vector3f;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -11,6 +13,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.CapeLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -22,6 +25,9 @@ import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -38,11 +44,12 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
         super(p_117346_);
     }
 
-    private List<Object> namesOfPlayersWithSavedCape = new ArrayList<>();
-    private List<Object> namesOfPlayersWhichDoNotHaveACape = new ArrayList<>();
-    private List<Object> namesOfPlayersWhichDoHaveACape = new ArrayList<>();
+    private final List<Object> namesOfPlayersWithSavedCape = new ArrayList<>();
+    private final List<Object> namesOfPlayersWhichDoNotHaveACape = new ArrayList<>();
+    private final List<Object> namesOfPlayersWhichDoHaveACape = new ArrayList<>();
 
     private static final Logger LOGGER = LogUtils.getLogger();
+    private final net.minecraft.client.Minecraft mc = Minecraft.getInstance();
 
     /**
      * @author ccetl
@@ -57,11 +64,12 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
             String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + name.toLowerCase(Locale.ROOT) + ".png";
             String rawPath = runLocation.toLowerCase(Locale.ROOT) + "\\CustomCapes\\cache";
             String locationForMinecraft = "\\customcapes\\cache\\" + name.toLowerCase(Locale.ROOT) + ".png";
-            URL hasCapeURL = null;
             boolean hasCape = false;
             LOGGER.info("Started loading the Cape of " + name);
 
-            if(!namesOfPlayersWhichDoNotHaveACape.contains(name) || !namesOfPlayersWhichDoHaveACape.contains(name)) {
+            if(!namesOfPlayersWhichDoNotHaveACape.contains(name) && !namesOfPlayersWhichDoHaveACape.contains(name)) {
+                URL hasCapeURL = null;
+                LOGGER.info("started checking if " + name + " has a cape");
                 try {
                     hasCapeURL = new URL("https://customcapes.org/api/hascape/" + name);
                 } catch (MalformedURLException e) {
@@ -74,6 +82,7 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
                     BufferedReader br = new BufferedReader(new InputStreamReader(urlconnection.getInputStream()));
                     String hasCapeString;
                     while ((hasCapeString = br.readLine()) != null) {
+                        LOGGER.warn("requested has cape for " + name);
                         if (hasCapeString.equals("true")) {
                             hasCape = true;
                             namesOfPlayersWhichDoHaveACape.add(name);
@@ -82,6 +91,7 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
                             namesOfPlayersWhichDoNotHaveACape.add(name);
                         } else {
                             LOGGER.warn("Something went wrong while reading " + hasCapeURL);
+                            namesOfPlayersWhichDoNotHaveACape.add(name);
                         }
                     }
                     br.close();
@@ -169,7 +179,7 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
             if (p_116618_.isCapeLoaded() && !p_116618_.isInvisible() && p_116618_.isModelPartShown(PlayerModelPart.CAPE) && hasCape) {
                 LOGGER.info(name + " has a cape!");
                 String capeLocation = locationForMinecraft.replace("\\", "/").toLowerCase(Locale.ROOT);
-                ResourceLocation cape = new ResourceLocation(capeLocation);
+
                 ItemStack itemstack = p_116618_.getItemBySlot(EquipmentSlot.CHEST);
                 if (!itemstack.is(Items.ELYTRA)) {
                     p_116615_.pushPose();
@@ -200,6 +210,18 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
                     p_116615_.mulPose(Vector3f.ZP.rotationDegrees(f3 / 2.0F));
                     p_116615_.mulPose(Vector3f.YP.rotationDegrees(180.0F - f3 / 2.0F));
 
+
+                    InputStream is = null;
+                    NativeImage ni = null;
+                    try {
+                        is = new FileInputStream(path);
+                        ni = NativeImage.read(is);
+                        is.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    assert ni != null;
+                    ResourceLocation cape = Minecraft.getInstance().getTextureManager().register(name + ".png", new DynamicTexture(ni));
 
                     VertexConsumer vertexconsumer = p_116616_.getBuffer(RenderType.entitySolid(cape));
                     this.getParentModel().renderCloak(p_116615_, vertexconsumer, p_116617_, OverlayTexture.NO_OVERLAY);
@@ -241,7 +263,7 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
                     p_116615_.popPose();
                 }
             } else if (!hasCape) {
-                LOGGER.info(name + " hasn't cape");
+                LOGGER.info(name + " hasn't a cape");
             } else if (p_116618_.isCapeLoaded() && p_116618_.isInvisible() && p_116618_.isModelPartShown(PlayerModelPart.CAPE) && hasCape) {
                 LOGGER.info(name + " is invisible");
             } else if (p_116618_.isCapeLoaded() && !p_116618_.isInvisible() && !p_116618_.isModelPartShown(PlayerModelPart.CAPE) && hasCape) {
