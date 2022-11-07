@@ -59,11 +59,14 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
         boolean hasNotACustomCape = false;
         boolean hasACustomCape = false;
         boolean hasASavedCape = false;
-        LOGGER.info("Started loading the Cape of " + name);
         List<String> namesOfPlayersWhoDoNotHaveACape = util.INSTANCE.getNamesOfPlayersWhoDoNotHaveACape();
         List<String> namesOfPlayersWhoDoHaveACape = util.INSTANCE.getNamesOfPlayersWhoDoHaveACape();
         List<String> namesOfPlayersWithSavedCape = util.INSTANCE.getNamesOfPlayersWithSavedCape();
         boolean DebugMode = util.INSTANCE.isDebugMode();
+
+        if (DebugMode) {
+            LOGGER.info("Started loading the Cape of " + name);
+        }
 
         for (String ListName : namesOfPlayersWhoDoNotHaveACape) {
             if (ListName.equals(name)) {
