@@ -43,7 +43,6 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
     }
 
     private static final Logger LOGGER = LogUtils.getLogger();
-    private final net.minecraft.client.Minecraft mc = Minecraft.getInstance();
 
     /**
      * @author ccetl
@@ -56,7 +55,6 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
         String runLocation = Paths.get(".").toAbsolutePath().normalize().toString().toLowerCase().replace(" ", "-");
         String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + name.toLowerCase(Locale.ROOT) + ".png";
         String rawPath = runLocation.toLowerCase(Locale.ROOT) + "\\CustomCapes\\cache";
-        String locationForMinecraft = "\\customcapes\\cache\\" + name.toLowerCase(Locale.ROOT) + ".png";
         boolean hasCape = false;
         boolean hasNotACustomCape = false;
         boolean hasACustomCape = false;
@@ -65,11 +63,14 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
         List<String> namesOfPlayersWhoDoNotHaveACape = util.INSTANCE.getNamesOfPlayersWhoDoNotHaveACape();
         List<String> namesOfPlayersWhoDoHaveACape = util.INSTANCE.getNamesOfPlayersWhoDoHaveACape();
         List<String> namesOfPlayersWithSavedCape = util.INSTANCE.getNamesOfPlayersWithSavedCape();
+        boolean DebugMode = util.INSTANCE.isDebugMode();
 
         for (String ListName : namesOfPlayersWhoDoNotHaveACape) {
             if (ListName.equals(name)) {
                 hasNotACustomCape = true;
-                LOGGER.info(name + " hasn't a cape! (from List)");
+                if (DebugMode) {
+                    LOGGER.info(name + " hasn't a cape! (from List)");
+                }
                 break;
             }
         }
@@ -77,7 +78,9 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
         for (String ListName : namesOfPlayersWhoDoHaveACape) {
             if (ListName.equals(name)) {
                 hasACustomCape = true;
-                LOGGER.info(name + " has a cape! (from List)");
+                if (DebugMode) {
+                    LOGGER.info(name + " has a cape! (from List)");
+                }
                 break;
             }
         }
@@ -86,7 +89,9 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
             for (String ListName : namesOfPlayersWithSavedCape) {
                 if (ListName.equals(name)) {
                     hasASavedCape = true;
-                    LOGGER.info(name + " has a saved cape! (from List)");
+                    if (DebugMode) {
+                        LOGGER.info(name + " has a saved cape! (from List)");
+                    }
                     break;
                 }
             }
@@ -94,7 +99,9 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
 
         if(!hasACustomCape && !hasNotACustomCape) {
             URL hasCapeURL = null;
-            LOGGER.info("started checking if " + name + " has a cape");
+            if (DebugMode) {
+                LOGGER.info("started checking if " + name + " has a cape");
+            }
             try {
                 hasCapeURL = new URL("https://customcapes.org/api/hascape/" + name);
             } catch (MalformedURLException e) {
@@ -108,7 +115,9 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
                 BufferedReader br = new BufferedReader(new InputStreamReader(urlconnection.getInputStream()));
                 String hasCapeString;
                 while ((hasCapeString = br.readLine()) != null) {
-                    LOGGER.warn("requested has cape for " + name);
+                    if (DebugMode) {
+                        LOGGER.warn("requested has cape for " + name);
+                    }
                     if (hasCapeString.equals("true")) {
                         hasCape = true;
                         util.INSTANCE.addToNamesOfPlayersWhoDoHaveACape(name);
@@ -128,8 +137,6 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
             }
         } else if (hasACustomCape) {
             hasCape = true;
-        } else if(hasNotACustomCape) {
-            hasCape = false;
         }
 
         if (hasCape && !hasASavedCape) {
@@ -143,7 +150,7 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
             }
 
             //create the path
-            new File(rawPath).mkdirs();
+            if (new File(rawPath).mkdirs()) LOGGER.info("Created the cache folder");
 
             //safe the image from the api
             InputStream is = null;
@@ -151,7 +158,7 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
                 assert url != null;
                 is = url.openStream();
             } catch (IOException e) {
-                LOGGER.warn("failed to open the connection to CustomCapes");
+                LOGGER.warn("Failed to open the connection to CustomCapes");
                 LOGGER.warn(e.getMessage());
                 e.printStackTrace();
             }
@@ -198,18 +205,20 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
         }
 
         if (p_116618_.isCapeLoaded() && !p_116618_.isInvisible() && p_116618_.isModelPartShown(PlayerModelPart.CAPE) && hasCape) {
-            LOGGER.info(name + " has a cape!");
+            if (DebugMode) {
+                LOGGER.info(name + " has a cape!");
+            }
 
             ItemStack itemstack = p_116618_.getItemBySlot(EquipmentSlot.CHEST);
             if (!itemstack.is(Items.ELYTRA)) {
                 p_116615_.pushPose();
                 p_116615_.translate(0.0D, 0.0D, 0.125D);
-                double d0 = Mth.lerp((double) p_116621_, p_116618_.xCloakO, p_116618_.xCloak) - Mth.lerp((double) p_116621_, p_116618_.xo, p_116618_.getX());
-                double d1 = Mth.lerp((double) p_116621_, p_116618_.yCloakO, p_116618_.yCloak) - Mth.lerp((double) p_116621_, p_116618_.yo, p_116618_.getY());
-                double d2 = Mth.lerp((double) p_116621_, p_116618_.zCloakO, p_116618_.zCloak) - Mth.lerp((double) p_116621_, p_116618_.zo, p_116618_.getZ());
+                double d0 = Mth.lerp(p_116621_, p_116618_.xCloakO, p_116618_.xCloak) - Mth.lerp(p_116621_, p_116618_.xo, p_116618_.getX());
+                double d1 = Mth.lerp(p_116621_, p_116618_.yCloakO, p_116618_.yCloak) - Mth.lerp(p_116621_, p_116618_.yo, p_116618_.getY());
+                double d2 = Mth.lerp(p_116621_, p_116618_.zCloakO, p_116618_.zCloak) - Mth.lerp(p_116621_, p_116618_.zo, p_116618_.getZ());
                 float f = p_116618_.yBodyRotO + (p_116618_.yBodyRot - p_116618_.yBodyRotO);
-                double d3 = (double) Mth.sin(f * ((float) Math.PI / 180F));
-                double d4 = (double) (-Mth.cos(f * ((float) Math.PI / 180F)));
+                double d3 = Mth.sin(f * ((float) Math.PI / 180F));
+                double d4 = -Mth.cos(f * ((float) Math.PI / 180F));
                 float f1 = (float) d1 * 10.0F;
                 f1 = Mth.clamp(f1, -6.0F, 32.0F);
                 float f2 = (float) (d0 * d3 + d2 * d4) * 100.0F;
@@ -230,8 +239,7 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
                 p_116615_.mulPose(Vector3f.ZP.rotationDegrees(f3 / 2.0F));
                 p_116615_.mulPose(Vector3f.YP.rotationDegrees(180.0F - f3 / 2.0F));
 
-
-                InputStream is = null;
+                InputStream is;
                 NativeImage ni = null;
                 try {
                     is = new FileInputStream(path);
@@ -248,17 +256,19 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
                 p_116615_.popPose();
             }
         } else if (p_116618_.isCapeLoaded() && !p_116618_.isInvisible() && p_116618_.isModelPartShown(PlayerModelPart.CAPE) && p_116618_.getCloakTextureLocation() != null && !hasCape) {
-            LOGGER.info(name + " hasn't CustomCape ): but a vanilla cape");
+            if (DebugMode) {
+                LOGGER.info(name + " hasn't CustomCape ): but a vanilla cape");
+            }
             ItemStack itemstack = p_116618_.getItemBySlot(EquipmentSlot.CHEST);
             if (!itemstack.is(Items.ELYTRA)) {
                 p_116615_.pushPose();
                 p_116615_.translate(0.0D, 0.0D, 0.125D);
-                double d0 = Mth.lerp((double) p_116621_, p_116618_.xCloakO, p_116618_.xCloak) - Mth.lerp((double) p_116621_, p_116618_.xo, p_116618_.getX());
-                double d1 = Mth.lerp((double) p_116621_, p_116618_.yCloakO, p_116618_.yCloak) - Mth.lerp((double) p_116621_, p_116618_.yo, p_116618_.getY());
-                double d2 = Mth.lerp((double) p_116621_, p_116618_.zCloakO, p_116618_.zCloak) - Mth.lerp((double) p_116621_, p_116618_.zo, p_116618_.getZ());
+                double d0 = Mth.lerp(p_116621_, p_116618_.xCloakO, p_116618_.xCloak) - Mth.lerp(p_116621_, p_116618_.xo, p_116618_.getX());
+                double d1 = Mth.lerp(p_116621_, p_116618_.yCloakO, p_116618_.yCloak) - Mth.lerp(p_116621_, p_116618_.yo, p_116618_.getY());
+                double d2 = Mth.lerp(p_116621_, p_116618_.zCloakO, p_116618_.zCloak) - Mth.lerp(p_116621_, p_116618_.zo, p_116618_.getZ());
                 float f = p_116618_.yBodyRotO + (p_116618_.yBodyRot - p_116618_.yBodyRotO);
-                double d3 = (double) Mth.sin(f * ((float) Math.PI / 180F));
-                double d4 = (double) (-Mth.cos(f * ((float) Math.PI / 180F)));
+                double d3 = Mth.sin(f * ((float) Math.PI / 180F));
+                double d4 = -Mth.cos(f * ((float) Math.PI / 180F));
                 float f1 = (float) d1 * 10.0F;
                 f1 = Mth.clamp(f1, -6.0F, 32.0F);
                 float f2 = (float) (d0 * d3 + d2 * d4) * 100.0F;
@@ -283,11 +293,17 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
                 p_116615_.popPose();
             }
         } else if (!hasCape) {
-            LOGGER.info(name + " hasn't a cape");
+            if (DebugMode) {
+                LOGGER.info(name + " hasn't a cape");
+            }
         } else if (p_116618_.isCapeLoaded() && p_116618_.isInvisible() && p_116618_.isModelPartShown(PlayerModelPart.CAPE)) {
-            LOGGER.info(name + " is invisible");
+            if (DebugMode) {
+                LOGGER.info(name + " is invisible");
+            }
         } else if (p_116618_.isCapeLoaded() && !p_116618_.isInvisible() && !p_116618_.isModelPartShown(PlayerModelPart.CAPE)) {
-            LOGGER.info(name + " has the cape toggled off");
+            if (DebugMode) {
+                LOGGER.info(name + " has the cape toggled off");
+            }
         }
     }
 }
