@@ -26,41 +26,18 @@
     <a href="https://customcapes.org/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/CustomCapes/CustomCapes-mod-template/issues">Report Bug</a>
+    <a href="https://github.com/ccetl/CustomCapesForge/issues">Report Bug</a>
     ·
-    <a href="https://github.com/CustomCapes/CustomCapes-mod-template/issues">Request Feature</a>
+    <a href="https://github.com/ccetl/CustomCapesForge/issues">Request Feature</a>
   </p>
 </div>
-
-
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    </li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-
-
-CustomCapes is a project started to fix the issue of paing for capes online. or not being abel to customize your cape. CustomCapes allow you and client makers to use cusotm capes in your client of just for pusonal use. 
+The CustomCapes mod is a mod implementing CustomCapes.org into Minecraft using the <br>
+Forge mod loader. <br>
+````[] Fabric planed````
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -71,78 +48,35 @@ CustomCapes is a project started to fix the issue of paing for capes online. or 
 
 
 <!-- GETTING STARTED -->
-## Code Preview
+## Credits:
 
-'''
-test
-'''
-
-## Some more details
-<details>
-	<summary>uncompressed file size</summary>
-	<br>
-
-
-
-
-``` 
-	The uncompressed file size of OannaOS is 7.12 GB after install.
-```
-
-
-
-</details>
-<details>
-	<summary>suported versions of ubuntu</summary>
-	<br>
+<br>
+- <a target="_blank" href="https://icons8.com/icon/97911/wi-fi-disconnected">Wi-Fi Disconnected</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+-<br>
+- <a target="_blank" href="https://icons8.com/icon/Myn8d0X7OhS3/wi-fi-off">Wi-Fi off</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+<br>
+- <a target="_blank" href="https://icons8.com/icon/41406/cloud-cross">Cloud Cross</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+<br>
+- Dream AI 
+<br>
+- Silke Pilon for the api 
+<br>
+- <a target="_blank" href="https://icons8.com/icon/15478/checkmark">Checkmark</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 
 
 
 
-``` 
-	OannaOS currently supports ubuntu 22.04 TLS & 22.10 non-TLS. this will be updated regely after for new releases.
-```
 
 
-
-</details>
-<details>
-	<summary>iso file size</summary>
-	<br>
-
-
-
-
-``` 
-	The OannaOS iso fie size is about +/- 3.0 GB
-```
-
-
-
-</details>
-
-
-
-<!-- USAGE EXAMPLES -->
-
-## Usage & setup
-
-
-_For more examples, please refer to the [Documentation](https://oanna-os)_
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ROADMAP -->
-## Roadmap
+<!-- Installing -->
+## Installing
 
 - [x] soon!
 
+Follow the Forge installing guide : ! <br>
+No external dependencies needed.
 
-See the [open issues](https://github.com/CustomCapes/CustomCapes-mod-template/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)
 
 ## Request a new feature or update
 
@@ -150,60 +84,28 @@ to request a feuate or update make a issue with a clear discripton of your featu
 
 See the [Request new features or updates](https://github.com/CustomCapes/CustomCapes-mod-template/issues) for a full list of proposed features (and known issues).
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-(soon!)
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
+<p align="right">(<a href="#top">back to top</a>)
 
 
 <!-- LICENSE -->
 ## License
 
-This is free and unencumbered software released into the public domain.
+Copyright (c) 2022 ccetl <br>
+All rights reserved! YOU ARE NOT ALLOWED TO MODIFY, DISTRIBUTE OR USE THE <br>
+CODE WITHOUT PERMISSION! <br>
 
-Anyone is free to copy, modify, publish, use, compile, sell, or distribute this software, either in source code form or as a compiled binary, for any purpose, commercial or non-commercial, and by any means.
-
-In jurisdictions that recognize copyright laws, the author or authors of this software dedicate any and all copyright interest in the software to the public domain. We make this dedication for the benefit of the public at large and to the detriment of our heirs and successors. We intend this dedication to be an overt act of relinquishment in perpetuity of all present and future rights to this software under copyright law.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-For more information, please refer to https://unlicense.org
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
+<p align="right">(<a href="#top">back to top</a>)
 
 <!-- CONTACT -->
 ## Contact
 
+ccetl - ccetl#3198<br>
 Silke Pilon - team@oanna-os
 
-Project Link: [https://github.com/CustomCapes/CustomCapes-mod-template/](https://github.com/CustomCapes/CustomCapes-mod-template/)
+>Modrinth    : <br>
+> Curseforge :
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-
-* [@SilkePilon]()
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
