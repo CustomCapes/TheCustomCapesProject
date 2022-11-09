@@ -14,8 +14,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/CustomCapes/CustomCapes-mod-template/">
-    <img src="https://github.com/CustomCapes/CustomCapes-mod-template/" alt="Logo" width="80" height="80">
+  <a href="https://github.com/ccetl/CustomCapesForge">
+    <img src="https://github.com/ccetl/CustomCapesForge" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">CustomCapes NOT DONE!</h3>
@@ -71,10 +71,12 @@ Forge mod loader. <br>
 <!-- Installing -->
 ## Installing
 
-- [x] soon!
 
-Follow the Forge installing guide : ! <br>
-No external dependencies needed.
+
+Go to [the Forge website](https://files.minecraftforge.net/net/minecraftforge/forge/) and select the Minecraft version you wish to get Forge for from the list. <br>
+*The CustomCapes mod curently supports versions 1.12.2 & 1.19.2
+
+You can download the installer for the Recommended Build or the Latest build there. Latest builds may have newer features but may be more unstable as a result. The installer will attempt to install Forge into your vanilla launcher environment, where you can then create a new profile using that version. Then start up the game. When the Minecraft title screen shows, close the game and navigate to your Minecraft instalation folder. Open the "mods" folder and copy the .jar into it. Thats all. Now when you start up your game you can enjoy your custom capes! Make sure to [register](https://customcapes.org/signup) your username!
 
 <p align="right">(<a href="#top">back to top</a>)
 
@@ -82,7 +84,7 @@ No external dependencies needed.
 
 to request a feuate or update make a issue with a clear discripton of your feature or update with the tag "New Feature or Update"
 
-See the [Request new features or updates](https://github.com/CustomCapes/CustomCapes-mod-template/issues) for a full list of proposed features (and known issues).
+See the [Request new features or updates](https://github.com/ccetl/CustomCapesForgeissues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)
 
@@ -109,15 +111,15 @@ Silke Pilon - team@oanna-os
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/CustomCapes/CustomCapes-mod-template.svg?style=for-the-badge
-[contributors-url]: https://github.com/CustomCapes/CustomCapes-mod-template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/CustomCapes/CustomCapes-mod-template.svg?style=for-the-badge
-[forks-url]: https://github.com/CustomCapes/CustomCapes-mod-template/network/members
-[stars-shield]: https://img.shields.io/github/stars/CustomCapes/CustomCapes-mod-template.svg?style=for-the-badge
-[stars-url]: https://github.com/CustomCapes/CustomCapes-mod-template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/CustomCapes/CustomCapes-mod-template.svg?style=for-the-badge
-[issues-url]: https://github.com/CustomCapes/CustomCapes-mod-template/issues
-[license-shield]: https://img.shields.io/github/license/CustomCapes/CustomCapes-mod-template.svg?style=for-the-badge
-[license-url]: https://github.com/CustomCapes/CustomCapes-mod-template/blob/master/LICENSE.md
+[contributors-shield]: https://img.shields.io/github/contributors/ccetl/CustomCapesForge.svg?style=for-the-badge
+[contributors-url]: https://github.com/ccetl/CustomCapesForge/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/ccetl/CustomCapesForge.svg?style=for-the-badge
+[forks-url]: https://github.com/ccetl/CustomCapesForge/network/members
+[stars-shield]: https://img.shields.io/github/stars/ccetl/CustomCapesForge.svg?style=for-the-badge
+[stars-url]: https://github.com/ccetl/CustomCapesForge/stargazers
+[issues-shield]: https://img.shields.io/github/issues/ccetl/CustomCapesForge.svg?style=for-the-badge
+[issues-url]: https://github.com/ccetl/CustomCapesForge/issues
+[license-shield]: https://img.shields.io/github/license/ccetl/CustomCapesForge.svg?style=for-the-badge
+[license-url]: https://github.com/ccetl/CustomCapesForge/blob/master/LICENSE.md
 [product-screenshot]: images/screenshot.png
 <div id="top"></div>
