@@ -71,9 +71,11 @@ Forge mod loader. <br>
 <!-- Installing -->
 ## Installing
 
-- [x] soon!
 
-Follow the Forge installing guide : ! <br>
+
+Go to the [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/) website and select the Minecraft version you wish to get Forge for from the list.
+
+You can download the installer for the Recommended Build or the Latest build there. Latest builds may have newer features but may be more unstable as a result. The installer will attempt to install Forge into your vanilla launcher environment, where you can then create a new profile using that version and play the game!
 No external dependencies needed.
 
 <p align="right">(<a href="#top">back to top</a>)
