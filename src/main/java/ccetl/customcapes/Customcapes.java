@@ -51,17 +51,19 @@ public class Customcapes {
 
             util.INSTANCE.checkApiStatus();
             util.INSTANCE.checkConnection();
+            util.INSTANCE.createFolders();
 
-            String rawPath = Paths.get(".").toAbsolutePath().normalize() + "\\CustomCapes\\cache";
-            try {
-                FileUtils.deleteDirectory(new File(rawPath));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if(new File(rawPath).mkdirs()) {
-                LOGGER.info("Created new cache folder");
-            } else {
-                LOGGER.info("Cache folder already exists or creation failed");
+            createPlayerEntry.INSTANCE.getPlayerNames();
+            for (String name : util.INSTANCE.startUpNames) {
+                String oldHash = createPlayerEntry.INSTANCE.readPlayerHash(name);
+                String newHash = util.INSTANCE.getHash(name);
+                boolean same = util.INSTANCE.isSame(oldHash, newHash);
+                if (same) {
+                    util.INSTANCE.addToNamesOfPlayersWithSavedCape(name);
+                } else {
+                    util.INSTANCE.deletePlayerCapeImage(name);
+                    util.INSTANCE.getCape(name);
+                }
             }
 
         }

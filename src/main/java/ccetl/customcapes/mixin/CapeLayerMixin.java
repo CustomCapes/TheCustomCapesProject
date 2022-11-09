@@ -1,5 +1,6 @@
 package ccetl.customcapes.mixin;
 
+import ccetl.customcapes.createPlayerEntry;
 import ccetl.customcapes.util;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -54,7 +55,6 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
         String name = p_116618_.getName().getString();
         String runLocation = Paths.get(".").toAbsolutePath().normalize().toString().toLowerCase().replace(" ", "-");
         String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + name.toLowerCase(Locale.ROOT) + ".png";
-        String rawPath = runLocation.toLowerCase(Locale.ROOT) + "\\CustomCapes\\cache";
         boolean hasCape = false;
         boolean hasNotACustomCape = false;
         boolean hasACustomCape = false;
@@ -143,68 +143,7 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
         }
 
         if (hasCape && !hasASavedCape) {
-            URL url = null;
-            try {
-                url = new URL("https://customcapes.org/api/capes/" + name + ".png");
-            } catch (MalformedURLException e) {
-                LOGGER.warn("failed to set the url");
-                LOGGER.warn(e.getMessage());
-                e.printStackTrace();
-            }
-
-            //create the path
-            if (new File(rawPath).mkdirs()) LOGGER.info("Created the cache folder");
-
-            //safe the image from the api
-            InputStream is = null;
-            try {
-                assert url != null;
-                is = url.openStream();
-            } catch (IOException e) {
-                LOGGER.warn("Failed to open the connection to CustomCapes");
-                LOGGER.warn(e.getMessage());
-                e.printStackTrace();
-            }
-            OutputStream os = null;
-            try {
-                os = new FileOutputStream(path);
-            } catch (FileNotFoundException e) {
-                LOGGER.warn("failed to create the outputStream");
-                LOGGER.warn(e.getMessage());
-                e.printStackTrace();
-            }
-            byte[] b = new byte[2048];
-            int length = 0;
-            while (true) {
-                try {
-                    assert is != null;
-                    if ((length = is.read(b)) == -1) break;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    assert os != null;
-                    os.write(b, 0, length);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            try {
-                is.close();
-            } catch (IOException e) {
-                LOGGER.warn("failed to end the connection");
-                LOGGER.warn(e.getMessage());
-                e.printStackTrace();
-            }
-            try {
-                assert os != null;
-                os.close();
-            } catch (IOException e) {
-                LOGGER.warn("failed to end the download");
-                LOGGER.warn(e.getMessage());
-                e.printStackTrace();
-            }
-            util.INSTANCE.addToNamesOfPlayersWithSavedCape(name);
+            util.INSTANCE.getCape(name);
         }
 
         if (p_116618_.isCapeLoaded() && !p_116618_.isInvisible() && p_116618_.isModelPartShown(PlayerModelPart.CAPE) && hasCape) {
