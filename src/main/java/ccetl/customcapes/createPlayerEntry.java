@@ -61,12 +61,14 @@ public class createPlayerEntry {
             e.printStackTrace();
         }
 
-        assert NamesInOneString != null;
-        String [] s = NamesInOneString.split("##");
-        final List<String> playerNames = new ArrayList<>(Arrays.asList(s));
+        if(NamesInOneString != null) {
+            String[] s = NamesInOneString.split("##");
+            final List<String> playerNames = new ArrayList<>(Arrays.asList(s));
 
-        for (String playerName : playerNames) {
-            util.INSTANCE.addToStartUpNames(playerName);
+
+            for (String playerName : playerNames) {
+                util.INSTANCE.addToStartUpNames(playerName);
+            }
         }
     }
 
