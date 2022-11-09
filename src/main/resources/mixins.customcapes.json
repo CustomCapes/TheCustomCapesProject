@@ -1,0 +1,8 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "ccetl.customcapes.mixin",
+  "refmap": "refmap.customcapes.json",
+  "mixins": [],
+  "client": ["CapeLayerMixin"],
+  "server": []
+}
