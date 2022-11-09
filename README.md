@@ -73,7 +73,7 @@ Forge mod loader. <br>
 
 
 
-Go to the [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/) website and select the Minecraft version you wish to get Forge for from the list.
+Go to [the Forge website](https://files.minecraftforge.net/net/minecraftforge/forge/) and select the Minecraft version you wish to get Forge for from the list.
 *The CustomCapes mod curently supports versions 1.12.2 & 1.19.2
 
 You can download the installer for the Recommended Build or the Latest build there. Latest builds may have newer features but may be more unstable as a result. The installer will attempt to install Forge into your vanilla launcher environment, where you can then create a new profile using that version. Then start up the game. When the Minecraft title screen shows, close the game and navigate to your Minecraft instalation folder. Open the "mods" folder and copy the .jar into it. Thats all. Now when you start up your game you can enjoy your custom capes! Make sure to [register](https://customcapes.org/signup) your username!
