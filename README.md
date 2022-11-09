@@ -14,8 +14,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/CustomCapes/CustomCapes-mod-template/">
-    <img src="https://github.com/CustomCapes/CustomCapes-mod-template/" alt="Logo" width="80" height="80">
+  <a href="https://github.com/ccetl/CustomCapesForge">
+    <img src="https://github.com/ccetl/CustomCapesForge" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">CustomCapes NOT DONE!</h3>
@@ -82,7 +82,7 @@ No external dependencies needed.
 
 to request a feuate or update make a issue with a clear discripton of your feature or update with the tag "New Feature or Update"
 
-See the [Request new features or updates](https://github.com/CustomCapes/CustomCapes-mod-template/issues) for a full list of proposed features (and known issues).
+See the [Request new features or updates](https://github.com/ccetl/CustomCapesForgeissues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)
 
@@ -109,15 +109,15 @@ Silke Pilon - team@oanna-os
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/CustomCapes/CustomCapes-mod-template.svg?style=for-the-badge
-[contributors-url]: https://github.com/CustomCapes/CustomCapes-mod-template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/CustomCapes/CustomCapes-mod-template.svg?style=for-the-badge
-[forks-url]: https://github.com/CustomCapes/CustomCapes-mod-template/network/members
-[stars-shield]: https://img.shields.io/github/stars/CustomCapes/CustomCapes-mod-template.svg?style=for-the-badge
-[stars-url]: https://github.com/CustomCapes/CustomCapes-mod-template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/CustomCapes/CustomCapes-mod-template.svg?style=for-the-badge
-[issues-url]: https://github.com/CustomCapes/CustomCapes-mod-template/issues
-[license-shield]: https://img.shields.io/github/license/CustomCapes/CustomCapes-mod-template.svg?style=for-the-badge
-[license-url]: https://github.com/CustomCapes/CustomCapes-mod-template/blob/master/LICENSE.md
+[contributors-shield]: https://img.shields.io/github/contributors/ccetl/CustomCapesForge.svg?style=for-the-badge
+[contributors-url]: https://github.com/ccetl/CustomCapesForge/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/ccetl/CustomCapesForge.svg?style=for-the-badge
+[forks-url]: https://github.com/ccetl/CustomCapesForge/network/members
+[stars-shield]: https://img.shields.io/github/stars/ccetl/CustomCapesForge.svg?style=for-the-badge
+[stars-url]: https://github.com/ccetl/CustomCapesForge/stargazers
+[issues-shield]: https://img.shields.io/github/issues/ccetl/CustomCapesForge.svg?style=for-the-badge
+[issues-url]: https://github.com/ccetl/CustomCapesForge/issues
+[license-shield]: https://img.shields.io/github/license/ccetl/CustomCapesForge.svg?style=for-the-badge
+[license-url]: https://github.com/ccetl/CustomCapesForge/blob/master/LICENSE.md
 [product-screenshot]: images/screenshot.png
 <div id="top"></div>
