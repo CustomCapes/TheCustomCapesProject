@@ -178,19 +178,20 @@ public class util {
     }
 
     public String getHash(String playerName) {
+        StringBuilder sb = new StringBuilder();
         try {
             URL url = new URL("https://customcapes.org/api/hash/CustomCapes" + playerName);
             URLConnection urlconnection = url.openConnection();
             BufferedReader br = new BufferedReader(new InputStreamReader(urlconnection.getInputStream()));
-            String hash;
-            while ((hash = br.readLine()) != null) {
-                return hash;
+            String s;
+            while ((s = br.readLine()) != null) {
+                sb.append(s);
             }
             br.close();
         } catch (IOException e) {
             LOGGER.warn(e.getMessage());
         }
-        return null;
+        return sb.toString();
     }
 
     public boolean isSame(String Object1, String Object2) {
@@ -202,8 +203,7 @@ public class util {
     }
 
     public void getCape(String playerName) {
-        String runLocation = Paths.get(".").toAbsolutePath().normalize().toString().toLowerCase().replace(" ", "-");
-        String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
+        String path = getRunLocation().toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
 
         URL url = null;
         try {

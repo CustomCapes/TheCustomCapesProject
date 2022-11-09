@@ -1,7 +1,6 @@
 package ccetl.customcapes;
 
 import com.mojang.logging.LogUtils;
-import org.apache.logging.log4j.core.util.IOUtils;
 import org.slf4j.Logger;
 
 import java.io.*;

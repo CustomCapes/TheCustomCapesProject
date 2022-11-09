@@ -8,16 +8,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.file.Paths;
+import org.slf4j.Logger;
 
 @Mod(Customcapes.MODID)
 public class Customcapes {
@@ -25,8 +17,6 @@ public class Customcapes {
     public static final Customcapes INSTANCE = new Customcapes();
     public static final String MODID = "customcapes";
     private static final Logger LOGGER = LogUtils.getLogger();
-    private final boolean connection = util.INSTANCE.isConnection();
-    private final boolean apiOnline = util.INSTANCE.isApiOnline();
 
     public Customcapes() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -54,7 +44,7 @@ public class Customcapes {
             util.INSTANCE.createFolders();
 
             createPlayerEntry.INSTANCE.getPlayerNames();
-            for (String name : util.INSTANCE.startUpNames) {
+            for (String name : util.INSTANCE.getStartUpNames()) {
                 String oldHash = createPlayerEntry.INSTANCE.readPlayerHash(name);
                 String newHash = util.INSTANCE.getHash(name);
                 boolean same = util.INSTANCE.isSame(oldHash, newHash);

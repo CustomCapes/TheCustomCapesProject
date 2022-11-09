@@ -2,11 +2,7 @@ package ccetl.customcapes.mixin;
 
 import ccetl.customcapes.Customcapes;
 import ccetl.customcapes.util;
-import com.sun.jna.platform.unix.X11;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.client.gui.screens.AccessibilityOptionsScreen;
-import net.minecraft.client.gui.screens.LanguageSelectScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.network.chat.Component;

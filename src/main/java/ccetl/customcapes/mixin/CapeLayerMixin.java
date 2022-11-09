@@ -1,6 +1,5 @@
 package ccetl.customcapes.mixin;
 
-import ccetl.customcapes.createPlayerEntry;
 import ccetl.customcapes.util;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -115,24 +114,29 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
             try {
                 assert hasCapeURL != null;
                 URLConnection urlconnection = hasCapeURL.openConnection();
+                StringBuilder sb = new StringBuilder();
                 BufferedReader br = new BufferedReader(new InputStreamReader(urlconnection.getInputStream()));
-                String hasCapeString;
-                while ((hasCapeString = br.readLine()) != null) {
-                    if (DebugMode) {
-                        LOGGER.warn("requested has cape for " + name);
-                    }
-                    if (hasCapeString.equals("true")) {
-                        hasCape = true;
-                        util.INSTANCE.addToNamesOfPlayersWhoDoHaveACape(name);
-                    } else if (hasCapeString.equals("false")) {
-                        hasCape = false;
-                        util.INSTANCE.addToNamesOfPlayersWhoDoNotHaveACape(name);
-                    } else {
-                        LOGGER.warn("Something went wrong while reading " + hasCapeURL);
-                        util.INSTANCE.addToNamesOfPlayersWhoDoNotHaveACape(name);
-                    }
+                String s;
+                while ((s = br.readLine()) != null) {
+                    sb.append(s);
                 }
+                String hasCapeString = sb.toString();
                 br.close();
+
+                if (DebugMode) {
+                    LOGGER.warn("requested has cape for " + name);
+                }
+                if (hasCapeString.equals("true")) {
+                    hasCape = true;
+                    util.INSTANCE.addToNamesOfPlayersWhoDoHaveACape(name);
+                } else if (hasCapeString.equals("false")) {
+                    hasCape = false;
+                    util.INSTANCE.addToNamesOfPlayersWhoDoNotHaveACape(name);
+                } else {
+                    LOGGER.warn("Something went wrong while reading " + hasCapeURL);
+                    util.INSTANCE.addToNamesOfPlayersWhoDoNotHaveACape(name);
+                }
+
             } catch (IOException e) {
                 LOGGER.warn("Unable to check if " + name + " has a cape");
                 LOGGER.warn(e.getMessage());
