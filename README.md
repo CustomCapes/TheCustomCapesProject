@@ -12,13 +12,7 @@
 
 
 <!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/ccetl/CustomCapesForge">
-    <img src="https://github.com/ccetl/CustomCapesForge" alt="Logo" width="80" height="80">
-  </a>
-
-<h3 align="center">CustomCapes NOT DONE!</h3>
+<h1 align="center">CustomCapes NOT DONE!</h1>
 
   <p align="center">
    implement the cusomcapes api in Forge and Fabric.
