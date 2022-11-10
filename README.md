@@ -13,7 +13,7 @@
 
 <!-- PROJECT LOGO -->
 
-<h3 align="center">CustomCapes Forge</h3>
+<h1 align="center">CustomCapes Forge</h1>
 
   <p align="center">
    implement the cusomcapes api in Forge and Fabric.
