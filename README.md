@@ -11,7 +11,7 @@
 
 
 <!-- PROJECT LOGO -->
-<h1 align="center">CustomCapes official api docs</h1>
+<h1 align="center">CustomCapes Fabric</h1>
 
   <p align="center">
    official customcapes.org API docs
@@ -29,8 +29,8 @@
 ## About The Project
 
 The CustomCapes mod is a mod implementing CustomCapes.org into Minecraft using the <br>
-Forge mod loader. <br>
-````[] Fabric planed````
+Forge & Fabric mod loader. <br>
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
