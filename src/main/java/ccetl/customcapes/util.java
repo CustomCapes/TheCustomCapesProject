@@ -28,7 +28,7 @@ public class util {
     public String rawPathHash = Paths.get(".").toAbsolutePath().normalize() + "\\CustomCapes\\hash";
     public String rawPathNames = Paths.get(".").toAbsolutePath().normalize() + "\\CustomCapes\\names";
 
-    public boolean debugMode = true;
+    public boolean debugMode = false;
 
     public boolean apiOnline = false;
     public boolean connection = false;
