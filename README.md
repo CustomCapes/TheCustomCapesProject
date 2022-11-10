@@ -12,13 +12,8 @@
 
 
 <!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/ccetl/CustomCapesForge">
-    <img src="https://github.com/ccetl/CustomCapesForge" alt="Logo" width="80" height="80">
-  </a>
 
-<h3 align="center">CustomCapes NOT DONE!</h3>
+<h3 align="center">CustomCapes Forge</h3>
 
   <p align="center">
    implement the cusomcapes api in Forge and Fabric.
@@ -36,8 +31,7 @@
 ## About The Project
 
 The CustomCapes mod is a mod implementing CustomCapes.org into Minecraft using the <br>
-Forge mod loader. <br>
-````[] Fabric planed````
+Forge & Fabric mod loader. <br>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
