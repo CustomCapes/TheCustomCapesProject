@@ -11,10 +11,10 @@
 
 
 <!-- PROJECT LOGO -->
-<h1 align="center">CustomCapes NOT DONE!</h1>
+<h1 align="center">CustomCapes official api docs</h1>
 
   <p align="center">
-   implement the cusomcapes api in Forge and Fabric.
+   official customcapes.org API docs
     <br />
     <a href="https://customcapes.org/"><strong>Explore the docs »</strong></a>
     <br />
