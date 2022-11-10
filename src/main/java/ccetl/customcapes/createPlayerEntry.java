@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class createPlayerEntry {
 
@@ -17,6 +18,11 @@ public class createPlayerEntry {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public void createAPlayerEntry(String playerName, String hash) {
+
+        if (util.INSTANCE.isDebugMode()) {
+            LOGGER.info("create A Player Entry for " + playerName);
+        }
+
         Path hashPath = Path.of(util.INSTANCE.getRawPathHash() + "\\" + playerName + ".file");
         Path namePath = Path.of(util.INSTANCE.getRawPathNames() + "\\player.file");
         try {
@@ -42,21 +48,42 @@ public class createPlayerEntry {
     }
 
     public String readPlayerHash(String playerName) {
-        String hash = null;
-        try {
-            FileInputStream is = new FileInputStream(util.INSTANCE.getRawPathHash() + "\\" + playerName + ".file" );
-            hash = is.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        if (util.INSTANCE.isDebugMode()) {
+            LOGGER.info("started reading the hash from " + playerName);
         }
-        return hash;
+
+        String hash = null;
+        if (playerName != null) {
+            try {
+                FileInputStream is = new FileInputStream(util.INSTANCE.getRawPathHash() + "\\" + playerName + ".file");
+                Scanner myReader = new Scanner(is);
+                while (myReader.hasNextLine()) {
+                    hash = myReader.nextLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return hash;
+        } else {
+            return null;
+        }
     }
 
     public void getPlayerNames() {
+
+        if (util.INSTANCE.isDebugMode()) {
+            LOGGER.info("started to get the player names");
+        }
+
         String NamesInOneString = null;
         try {
             FileInputStream is = new FileInputStream(util.INSTANCE.getRawPathNames() + "\\player.file" );
-            NamesInOneString = is.toString();
+            Scanner myReader = new Scanner(is);
+            while (myReader.hasNextLine()) {
+                NamesInOneString = myReader.nextLine();
+            }
+            myReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

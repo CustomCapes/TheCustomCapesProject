@@ -43,6 +43,7 @@ authors="ccetl" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 Your own cape in minecraft!
+Credits: icons8.com for graphics, Silke Pilon for the api
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.customcapes]] #optional

@@ -1,12 +1,10 @@
 package ccetl.customcapes.mixin;
 
 import ccetl.customcapes.util;
-import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.logging.LogUtils;
 import com.mojang.math.Vector3f;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -14,7 +12,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.CapeLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -31,9 +28,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.Locale;
 
 @Mixin(CapeLayer.class)
 public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
@@ -52,8 +47,6 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
     @Overwrite
     public void render(@NotNull PoseStack p_116615_, @NotNull MultiBufferSource p_116616_, int p_116617_, AbstractClientPlayer p_116618_, float p_116619_, float p_116620_, float p_116621_, float p_116622_, float p_116623_, float p_116624_) {
         String name = p_116618_.getName().getString();
-        String runLocation = Paths.get(".").toAbsolutePath().normalize().toString().toLowerCase().replace(" ", "-");
-        String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + name.toLowerCase(Locale.ROOT) + ".png";
         boolean hasCape = false;
         boolean hasNotACustomCape = false;
         boolean hasACustomCape = false;
@@ -147,6 +140,9 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
         }
 
         if (hasCape && !hasASavedCape) {
+            if (DebugMode) {
+                LOGGER.info("Started to download the cape of " + name);
+            }
             util.INSTANCE.getCape(name);
         }
 
@@ -164,7 +160,7 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
                 double d2 = Mth.lerp(p_116621_, p_116618_.zCloakO, p_116618_.zCloak) - Mth.lerp(p_116621_, p_116618_.zo, p_116618_.getZ());
                 float f = p_116618_.yBodyRotO + (p_116618_.yBodyRot - p_116618_.yBodyRotO);
                 double d3 = Mth.sin(f * ((float) Math.PI / 180F));
-                double d4 = -Mth.cos(f * ((float) Math.PI / 180F));
+                double d4 = (-Mth.cos(f * ((float) Math.PI / 180F)));
                 float f1 = (float) d1 * 10.0F;
                 f1 = Mth.clamp(f1, -6.0F, 32.0F);
                 float f2 = (float) (d0 * d3 + d2 * d4) * 100.0F;
@@ -185,21 +181,20 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
                 p_116615_.mulPose(Vector3f.ZP.rotationDegrees(f3 / 2.0F));
                 p_116615_.mulPose(Vector3f.YP.rotationDegrees(180.0F - f3 / 2.0F));
 
-                InputStream is;
-                NativeImage ni = null;
-                try {
-                    is = new FileInputStream(path);
-                    ni = NativeImage.read(is);
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                boolean hasSavedResource = false;
+                for (String playerName : util.INSTANCE.getPlayersWithSavedResourceLocation()) {
+                    if (playerName.equals(name)) {
+                        hasACustomCape = true;
+                        break;
+                    }
                 }
-                assert ni != null;
-                ResourceLocation cape = Minecraft.getInstance().getTextureManager().register(name + ".png", new DynamicTexture(ni));
 
-                VertexConsumer vertexconsumer = p_116616_.getBuffer(RenderType.entitySolid(cape));
+                ResourceLocation cape = util.INSTANCE.getResourceLocation(name);
+
+                VertexConsumer vertexconsumer = p_116616_.getBuffer(RenderType.entitySolid(util.INSTANCE.getResourceLocation(name)));
                 this.getParentModel().renderCloak(p_116615_, vertexconsumer, p_116617_, OverlayTexture.NO_OVERLAY);
                 p_116615_.popPose();
+
             }
         } else if (p_116618_.isCapeLoaded() && !p_116618_.isInvisible() && p_116618_.isModelPartShown(PlayerModelPart.CAPE) && p_116618_.getCloakTextureLocation() != null && !hasCape) {
             if (DebugMode) {
@@ -214,7 +209,7 @@ public class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, PlayerMode
                 double d2 = Mth.lerp(p_116621_, p_116618_.zCloakO, p_116618_.zCloak) - Mth.lerp(p_116621_, p_116618_.zo, p_116618_.getZ());
                 float f = p_116618_.yBodyRotO + (p_116618_.yBodyRot - p_116618_.yBodyRotO);
                 double d3 = Mth.sin(f * ((float) Math.PI / 180F));
-                double d4 = -Mth.cos(f * ((float) Math.PI / 180F));
+                double d4 = (-Mth.cos(f * ((float) Math.PI / 180F)));
                 float f1 = (float) d1 * 10.0F;
                 f1 = Mth.clamp(f1, -6.0F, 32.0F);
                 float f2 = (float) (d0 * d3 + d2 * d4) * 100.0F;

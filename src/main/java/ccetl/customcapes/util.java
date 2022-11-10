@@ -1,6 +1,10 @@
 package ccetl.customcapes;
 
+import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 
@@ -24,15 +28,24 @@ public class util {
     public String rawPathHash = Paths.get(".").toAbsolutePath().normalize() + "\\CustomCapes\\hash";
     public String rawPathNames = Paths.get(".").toAbsolutePath().normalize() + "\\CustomCapes\\names";
 
-    public boolean debugMode = false;
+    public boolean debugMode = true;
 
     public boolean apiOnline = false;
     public boolean connection = false;
 
+    public final List<String> playersWithSavedResourceLocation = new ArrayList<>();
     public final List<String> startUpNames = new ArrayList<>();
     public final List<String> namesOfPlayersWithSavedCape = new ArrayList<>();
     public final List<String> namesOfPlayersWhoDoNotHaveACape = new ArrayList<>();
     public final List<String> namesOfPlayersWhoDoHaveACape = new ArrayList<>();
+
+    public void addToPlayersWithSavedResourceLocation(String playerName) {
+        playersWithSavedResourceLocation.add(playerName);
+    }
+
+    public List<String> getPlayersWithSavedResourceLocation() {
+        return playersWithSavedResourceLocation;
+    }
 
     public String getRawPathCache() {
         return rawPathCache;
@@ -168,16 +181,43 @@ public class util {
         }
     }
 
+    public String uid() {
+        double r1 = Math.random();
+        double r2 = Math.random();
+        double r3 = Math.random();
+        double r4 = Math.random();
+        double r5 = Math.random();
+        double r6 = Math.random();
+        double r7 = Math.random();
+        double r8 = Math.random();
+        double r9 = Math.random();
+        double r10 = Math.random();
+        return String.valueOf(r1) + r2 + r3 + r4 + r5 + r6 + r7 + r8 + r9 + r10;
+    }
+
+    public String getShortUID() {
+        double r1 = Math.random();
+        return String.valueOf(r1);
+    }
+
     public void deletePlayerCapeImage(String playerName) {
-        String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
-        try {
-            FileUtils.deleteDirectory(new File(path));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (util.INSTANCE.isDebugMode()) {
+            LOGGER.info("started to delete the cape of " + playerName);
+        }
+        if (playerName != null) {
+            try {
+                String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
+                FileUtils.deleteDirectory(new File(path));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public String getHash(String playerName) {
+        if (util.INSTANCE.isDebugMode()) {
+            LOGGER.info("started to get the hash from the web of " + playerName);
+        }
         StringBuilder sb = new StringBuilder();
         try {
             URL url = new URL("https://customcapes.org/api/hash/CustomCapes" + playerName);
@@ -195,74 +235,95 @@ public class util {
     }
 
     public boolean isSame(String Object1, String Object2) {
-        if (Object1.equals(Object2)) {
-            return true;
+        if (Object1 != null && Object2 != null) {
+            return Object1.equals(Object2);
         } else {
             return false;
         }
     }
 
     public void getCape(String playerName) {
-        String path = getRunLocation().toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
-
-        URL url = null;
-        try {
-            url = new URL("https://customcapes.org/api/capes/" + playerName + ".png");
-        } catch (MalformedURLException e) {
-            LOGGER.warn("failed to set the url");
-            LOGGER.warn(e.getMessage());
+        if (util.INSTANCE.isDebugMode()) {
+            LOGGER.info("started to get the cape of " + playerName);
         }
+        if (playerName != null) {
+            String path = getRunLocation().toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
 
-        //create the path
-        if (new File(getRawPathCache()).mkdirs()) LOGGER.info("Created the cache folder");
-
-        //safe the image from the api
-        InputStream is = null;
-        try {
-            assert url != null;
-            is = url.openStream();
-        } catch (IOException e) {
-            LOGGER.warn("Failed to open the connection to CustomCapes");
-            LOGGER.warn(e.getMessage());
-        }
-        OutputStream os = null;
-        try {
-            os = new FileOutputStream(path);
-        } catch (FileNotFoundException e) {
-            LOGGER.warn("failed to create the outputStream");
-            LOGGER.warn(e.getMessage());
-        }
-        byte[] b = new byte[2048];
-        int length = 0;
-        while (true) {
+            URL url = null;
             try {
-                assert is != null;
-                if ((length = is.read(b)) == -1) break;
+                url = new URL("https://customcapes.org/api/capes/" + playerName + ".png");
+            } catch (MalformedURLException e) {
+                LOGGER.warn("failed to set the url");
+                LOGGER.warn(e.getMessage());
+            }
+
+            //create the path
+            if (new File(getRawPathCache()).mkdirs()) LOGGER.info("Created the cache folder");
+
+            //safe the image from the api
+            InputStream is = null;
+            try {
+                assert url != null;
+                is = url.openStream();
             } catch (IOException e) {
+                LOGGER.warn("Failed to open the connection to CustomCapes");
+                LOGGER.warn(e.getMessage());
+            }
+            OutputStream os = null;
+            try {
+                os = new FileOutputStream(path);
+            } catch (FileNotFoundException e) {
+                LOGGER.warn("failed to create the outputStream");
+                LOGGER.warn(e.getMessage());
+            }
+            byte[] b = new byte[2048];
+            int length = 0;
+            while (true) {
+                try {
+                    assert is != null;
+                    if ((length = is.read(b)) == -1) break;
+                } catch (IOException e) {
+                    LOGGER.warn(e.getMessage());
+                }
+                try {
+                    assert os != null;
+                    os.write(b, 0, length);
+                } catch (IOException e) {
+                    LOGGER.warn(e.getMessage());
+                }
+            }
+            try {
+                is.close();
+            } catch (IOException e) {
+                LOGGER.warn("failed to end the connection");
                 LOGGER.warn(e.getMessage());
             }
             try {
                 assert os != null;
-                os.write(b, 0, length);
+                os.close();
             } catch (IOException e) {
+                LOGGER.warn("failed to end the download");
                 LOGGER.warn(e.getMessage());
             }
+            util.INSTANCE.addToNamesOfPlayersWithSavedCape(playerName);
+            createPlayerEntry.INSTANCE.createAPlayerEntry(playerName, util.INSTANCE.getHash(playerName));
         }
+    }
+
+    public ResourceLocation getResourceLocation(String playerName) {
+        String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
+        InputStream is;
+        NativeImage ni = null;
         try {
+            is = new FileInputStream(path);
+            ni = NativeImage.read(is);
             is.close();
         } catch (IOException e) {
-            LOGGER.warn("failed to end the connection");
-            LOGGER.warn(e.getMessage());
+            e.printStackTrace();
         }
-        try {
-            assert os != null;
-            os.close();
-        } catch (IOException e) {
-            LOGGER.warn("failed to end the download");
-            LOGGER.warn(e.getMessage());
-        }
-        util.INSTANCE.addToNamesOfPlayersWithSavedCape(playerName);
-        createPlayerEntry.INSTANCE.createAPlayerEntry(playerName, util.INSTANCE.getHash(playerName));
+        assert ni != null;
+        util.INSTANCE.addToPlayersWithSavedResourceLocation(playerName);
+        return Minecraft.getInstance().getTextureManager().register(playerName.toLowerCase(Locale.ROOT) + util.INSTANCE.getShortUID().replace(".", "").toLowerCase(Locale.ENGLISH).replace("-", "") , new DynamicTexture(ni));
     }
 
 }

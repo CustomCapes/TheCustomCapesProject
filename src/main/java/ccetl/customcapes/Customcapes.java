@@ -43,18 +43,22 @@ public class Customcapes {
             util.INSTANCE.checkConnection();
             util.INSTANCE.createFolders();
 
-            createPlayerEntry.INSTANCE.getPlayerNames();
+        /*
+        *    createPlayerEntry.INSTANCE.getPlayerNames();
             for (String name : util.INSTANCE.getStartUpNames()) {
-                String oldHash = createPlayerEntry.INSTANCE.readPlayerHash(name);
-                String newHash = util.INSTANCE.getHash(name);
-                boolean same = util.INSTANCE.isSame(oldHash, newHash);
-                if (same) {
-                    util.INSTANCE.addToNamesOfPlayersWithSavedCape(name);
-                } else {
-                    util.INSTANCE.deletePlayerCapeImage(name);
-                    util.INSTANCE.getCape(name);
+                if(name != null) {
+                    String oldHash = createPlayerEntry.INSTANCE.readPlayerHash(name);
+                    String newHash = util.INSTANCE.getHash(name);
+                    boolean same = util.INSTANCE.isSame(oldHash, newHash);
+                    if (same) {
+                        util.INSTANCE.addToNamesOfPlayersWithSavedCape(name);
+                    } else {
+                        util.INSTANCE.deletePlayerCapeImage(name);
+                        util.INSTANCE.getCape(name);
+                    }
                 }
             }
+        */
 
         }
     }

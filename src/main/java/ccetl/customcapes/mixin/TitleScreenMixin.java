@@ -20,10 +20,10 @@ public class TitleScreenMixin extends Screen {
     }
     String MODID = Customcapes.MODID;
 
-    ResourceLocation API_ONLINE = new ResourceLocation(MODID, "/assets/customcapes/icons/checkmark-height.png");
-    ResourceLocation API_OFFLINE = new ResourceLocation(MODID, "/assets/customcapes/icons/cloud-cross-height.png");
-    ResourceLocation CONNECTION_ERROR = new ResourceLocation(MODID, "/assets/customcapes/icons/wifi-off-height.png");
-    ResourceLocation GRAY = new ResourceLocation(MODID, "/assets/customcapes/icons/info-height.png");
+    ResourceLocation API_ONLINE = new ResourceLocation(MODID, "/resources/assets/customcapes/icons/checkmark-height.png");
+    ResourceLocation API_OFFLINE = new ResourceLocation(MODID, "/resources/assets/customcapes/icons/cloud-cross-height.png");
+    ResourceLocation CONNECTION_ERROR = new ResourceLocation(MODID, "/resources/assets/customcapes/icons/wifi-off-height.png");
+    ResourceLocation GRAY = new ResourceLocation(MODID, "/resources/assets/customcapes/icons/info-height.png");
 
     @Inject(at = @At("TAIL"), method = "init()V")
     private void init(CallbackInfo ci) {
