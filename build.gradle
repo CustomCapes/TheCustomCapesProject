@@ -16,7 +16,7 @@ plugins {
 apply plugin: 'org.spongepowered.mixin'
 
 group = 'ccetl'
-version = '1.0'
+version = '1.2'
 
 java {
     archivesBaseName = 'customcapes'

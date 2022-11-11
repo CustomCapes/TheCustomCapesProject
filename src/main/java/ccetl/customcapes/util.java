@@ -326,4 +326,50 @@ public class util {
         return Minecraft.getInstance().getTextureManager().register(playerName.toLowerCase(Locale.ROOT) + util.INSTANCE.getShortUID().replace(".", "").toLowerCase(Locale.ENGLISH).replace("-", "") , new DynamicTexture(ni));
     }
 
+    public boolean hasCape(String playerName) {
+        URL hasCapeURL = null;
+        if (util.INSTANCE.isDebugMode()) {
+            LOGGER.info("started checking if " + playerName + " has a cape");
+        }
+        try {
+            hasCapeURL = new URL("https://customcapes.org/api/hascape/" + playerName);
+        } catch (MalformedURLException e) {
+            LOGGER.warn("Unable to set the url to api/ hasCape");
+            LOGGER.warn(e.getMessage());
+            e.printStackTrace();
+        }
+        try {
+            assert hasCapeURL != null;
+            URLConnection urlconnection = hasCapeURL.openConnection();
+            StringBuilder sb = new StringBuilder();
+            BufferedReader br = new BufferedReader(new InputStreamReader(urlconnection.getInputStream()));
+            String s;
+            while ((s = br.readLine()) != null) {
+                sb.append(s);
+            }
+            String hasCapeString = sb.toString();
+            br.close();
+
+            if (util.INSTANCE.isDebugMode()) {
+                LOGGER.warn("requested has cape for " + playerName);
+            }
+            if (hasCapeString.equals("true")) {
+                util.INSTANCE.addToNamesOfPlayersWhoDoHaveACape(playerName);
+                return true;
+            } else if (hasCapeString.equals("false")) {
+                util.INSTANCE.addToNamesOfPlayersWhoDoNotHaveACape(playerName);
+                return false;
+            } else {
+                LOGGER.warn("Something went wrong while reading " + hasCapeURL);
+                util.INSTANCE.addToNamesOfPlayersWhoDoNotHaveACape(playerName);
+            }
+
+        } catch (IOException e) {
+            LOGGER.warn("Unable to check if " + playerName + " has a cape");
+            LOGGER.warn(e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }
