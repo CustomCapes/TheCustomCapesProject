@@ -1,5 +1,5 @@
 /*
- *  This file is part of thr CustomCapes Project (https://github.com/CustomCapes)
+ *  This file is part of the CustomCapes Project (https://github.com/CustomCapes)
  *  Copyright (C) 2022  ccetl
  *
  *  This program is free software: you can redistribute it and/or modify
