@@ -10,7 +10,7 @@
   "contact": {
     "website": "customcapes.org"
   },
-  "license": "All-Rights-Reserved",
+  "license": "GNU General Public License",
   "environment": "client",
   "entrypoints": {
     "client": [
