@@ -109,7 +109,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ## Contact
 
 ccetl - ccetl#3198<br>
-Silke Pilon - team@oanna-os
+Silke Pilon - dev@customcapes.org
 
 >Modrinth    : <br>
 > Curseforge :
