@@ -227,7 +227,7 @@ public class util {
         }
         if (playerName != null) {
             try {
-                String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
+                String path = runLocation.toLowerCase(Locale.ENGLISH) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
                 FileUtils.deleteDirectory(new File(path));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -268,7 +268,7 @@ public class util {
             LOGGER.info("started to get the cape of " + playerName);
         }
         if (playerName != null) {
-            String path = getRunLocation().toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
+            String path = getRunLocation().toLowerCase(Locale.ENGLISH) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
 
             URL url = null;
             try {
@@ -332,7 +332,7 @@ public class util {
     }
 
     public Identifier getResourceLocation(String playerName) {
-        String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
+        String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ENGLISH) + ".png";
         InputStream is;
         NativeImage ni = null;
         try {
