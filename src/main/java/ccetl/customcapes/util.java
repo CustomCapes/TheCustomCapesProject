@@ -41,7 +41,7 @@ public class util {
     public static final util INSTANCE = new util();
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public String runLocation = Paths.get(".").toAbsolutePath().normalize().toString().toLowerCase().replace(" ", "-");
+    public String runLocation = Paths.get(".").toAbsolutePath().normalize().toString().toLowerCase(Locale.ENGLISH).replace(" ", "-");
     public String rawPathCache = Paths.get(".").toAbsolutePath().normalize() + "\\CustomCapes\\cache";
     public String rawPathHash = Paths.get(".").toAbsolutePath().normalize() + "\\CustomCapes\\hash";
     public String rawPathNames = Paths.get(".").toAbsolutePath().normalize() + "\\CustomCapes\\names";
@@ -224,7 +224,7 @@ public class util {
         }
         if (playerName != null) {
             try {
-                String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
+                String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ENGLISH) + ".png";
                 FileUtils.deleteDirectory(new File(path));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -265,7 +265,7 @@ public class util {
             LOGGER.info("started to get the cape of " + playerName);
         }
         if (playerName != null) {
-            String path = getRunLocation().toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
+            String path = getRunLocation().toLowerCase(Locale.ENGLISH) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ENGLISH) + ".png";
 
             URL url = null;
             try {
@@ -329,7 +329,7 @@ public class util {
     }
 
     public ResourceLocation getResourceLocation(String playerName) {
-        String path = runLocation.toLowerCase(Locale.ROOT) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ROOT) + ".png";
+        String path = runLocation.toLowerCase(Locale.ENGLISH) + "\\customcapes\\cache\\" + playerName.toLowerCase(Locale.ENGLISH) + ".png";
         InputStream is;
         NativeImage ni = null;
         try {
@@ -341,7 +341,7 @@ public class util {
         }
         assert ni != null;
         util.INSTANCE.addToPlayersWithSavedResourceLocation(playerName);
-        return Minecraft.getInstance().getTextureManager().register(playerName.toLowerCase(Locale.ROOT) + util.INSTANCE.getShortUID().replace(".", "").toLowerCase(Locale.ENGLISH).replace("-", "") , new DynamicTexture(ni));
+        return Minecraft.getInstance().getTextureManager().register(playerName.toLowerCase(Locale.ENGLISH) + util.INSTANCE.getShortUID().replace(".", "").toLowerCase(Locale.ENGLISH).replace("-", "") , new DynamicTexture(ni));
     }
 
     public boolean hasCape(String playerName) {
