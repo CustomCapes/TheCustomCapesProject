@@ -41,21 +41,21 @@ public class util {
     public static final util INSTANCE = new util();
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public String runLocation = Paths.get(".").toAbsolutePath().normalize().toString().toLowerCase(Locale.ENGLISH).replace(" ", "-");
-    public String rawPathCache = Paths.get(".").toAbsolutePath().normalize() + "\\CustomCapes\\cache";
-    public String rawPathHash = Paths.get(".").toAbsolutePath().normalize() + "\\CustomCapes\\hash";
-    public String rawPathNames = Paths.get(".").toAbsolutePath().normalize() + "\\CustomCapes\\names";
+    private String runLocation = Paths.get(".").toAbsolutePath().normalize().toString().toLowerCase(Locale.ENGLISH).replace(" ", "-");
+    private String rawPathCache = Paths.get(".").toAbsolutePath().normalize() + "\\CustomCapes\\cache";
+    private String rawPathHash = Paths.get(".").toAbsolutePath().normalize() + "\\CustomCapes\\hash";
+    private String rawPathNames = Paths.get(".").toAbsolutePath().normalize() + "\\CustomCapes\\names";
 
-    public boolean debugMode = false;
+    private boolean debugMode = false;
 
-    public boolean apiOnline = false;
-    public boolean connection = false;
+    private boolean apiOnline = false;
+    private boolean connection = false;
 
-    public final List<String> playersWithSavedResourceLocation = new ArrayList<>();
-    public final List<String> startUpNames = new ArrayList<>();
-    public final List<String> namesOfPlayersWithSavedCape = new ArrayList<>();
-    public final List<String> namesOfPlayersWhoDoNotHaveACape = new ArrayList<>();
-    public final List<String> namesOfPlayersWhoDoHaveACape = new ArrayList<>();
+    private final List<String> playersWithSavedResourceLocation = new ArrayList<>();
+    private final List<String> startUpNames = new ArrayList<>();
+    private final List<String> namesOfPlayersWithSavedCape = new ArrayList<>();
+    private final List<String> namesOfPlayersWhoDoNotHaveACape = new ArrayList<>();
+    private final List<String> namesOfPlayersWhoDoHaveACape = new ArrayList<>();
 
     public void addToPlayersWithSavedResourceLocation(String playerName) {
         playersWithSavedResourceLocation.add(playerName);
